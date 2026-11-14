@@ -426,3 +426,18 @@ html{-webkit-text-size-adjust:100%}
 @media(max-width:1100px){.ph-intro{max-width:60ch}}
 
 a,button,.chip,.pcard{-webkit-tap-highlight-color:rgba(194,80,42,.18);touch-action:manipulation}
+
+/* ---------- phone fixes from screen recordings ---------- */
+.js .rv.rv-now{transition:none}
+.map-lock{display:none}
+@media(max-width:900px){
+  .nav{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .nav-leaving .menu{transition:none!important;opacity:0;visibility:hidden}
+  .js .rv{transition-duration:.55s;transform:translateY(14px)}
+}
+@media(hover:none),(max-width:900px){
+  .map-lock{display:grid;place-items:center;position:absolute;inset:0;z-index:2;width:100%;background:rgba(14,15,18,.18);border:0;color:#fff;cursor:pointer;font:700 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+  .map-lock span{background:rgba(14,15,18,.78);padding:12px 18px;border-radius:999px}
+  .map.unlocked .map-lock{display:none}
+  .map:not(.unlocked) iframe{pointer-events:none}
+}

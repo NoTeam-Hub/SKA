@@ -421,3 +421,6 @@ html{-webkit-text-size-adjust:100%}
 .logo-item img{width:100%;height:100%;object-fit:contain;mix-blend-mode:normal;filter:none;opacity:1}
 .logo-item:hover img{transform:scale(1.04)}
 @media(max-width:640px){.logo-band{gap:12px}.logo-track{gap:12px}.logo-item{width:160px;height:96px;padding:14px 16px;border-radius:16px}}
+
+.ph-intro{margin:14px 0 4px;font:500 15.5px/1.6 var(--sans);color:var(--mute);max-width:36ch}
+@media(max-width:1100px){.ph-intro{max-width:60ch}}

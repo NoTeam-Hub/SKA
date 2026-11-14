@@ -401,3 +401,13 @@ html{-webkit-text-size-adjust:100%}
 .tcard{text-align:center}
 .tcard .ph{border-radius:999px 999px 0 0}
 .tcard h4{margin-top:24px}
+
+/* form feedback message */
+.f-note{display:none;margin-top:18px;padding:16px 20px;border-radius:18px;font:500 15px/1.55 var(--sans);border:1px solid var(--line);background:#fff}
+.f-note.show{display:block;animation:fnIn .5s var(--ease)}
+.f-note.ok{background:#E8F3EA;border-color:#9CC8A6;color:#1F5A2E}
+.f-note.err{background:#FBEAE4;border-color:#E3A794;color:#8A2E12}
+.f-note.wait{color:var(--mute)}
+.f-note a{text-decoration:underline;font-weight:700}
+.f .btn[disabled]{opacity:.6;cursor:wait}
+@keyframes fnIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}

@@ -424,3 +424,5 @@ html{-webkit-text-size-adjust:100%}
 
 .ph-intro{margin:14px 0 4px;font:500 15.5px/1.6 var(--sans);color:var(--mute);max-width:36ch}
 @media(max-width:1100px){.ph-intro{max-width:60ch}}
+
+a,button,.chip,.pcard{-webkit-tap-highlight-color:rgba(194,80,42,.18);touch-action:manipulation}

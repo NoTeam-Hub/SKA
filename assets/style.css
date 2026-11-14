@@ -441,3 +441,12 @@ a,button,.chip,.pcard{-webkit-tap-highlight-color:rgba(194,80,42,.18);touch-acti
   .map.unlocked .map-lock{display:none}
   .map:not(.unlocked) iframe{pointer-events:none}
 }
+
+/* ---------- invisible menu must never catch taps (phone) ---------- */
+@media(max-width:900px){
+  .menu,.menu *{pointer-events:none}
+  .menu,.menu .sub{visibility:hidden}
+  .nav-open .menu,.nav-open .menu *{pointer-events:auto}
+  .nav-open .menu,.nav-open .menu .sub{visibility:visible}
+  .nav-leaving .menu,.nav-leaving .menu *{pointer-events:none}
+}

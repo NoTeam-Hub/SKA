@@ -17,8 +17,8 @@
   /* reliable in-page jumps on phones: lazy images and reveal effects shift the layout while a
      smooth scroll is running, so jump straight to the target and correct once the page settles */
   function jumpTo(id, push){
-    var el = id ? d.getElementById(id) : null;
-    if (!el && id !== '') return false;
+    var el = id && id !== 'top' ? d.getElementById(id) : null;
+    if (!el && id !== '' && id !== 'top') return false;
     var go = function(){
       var off = (nav ? nav.offsetHeight : 70) + 8;
       var y = el ? el.getBoundingClientRect().top + window.pageYOffset - off : 0;
@@ -32,12 +32,12 @@
   $$('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var h = a.getAttribute('href') || '';
-      if (h.length < 2) { if (h === '#top') { e.preventDefault(); jumpTo('', true); } return; }
+      if (h === '#' || h === '#top') { e.preventDefault(); d.body.classList.remove('nav-open'); jumpTo('', true); return; }
       var id = decodeURIComponent(h.slice(1));
       if (d.getElementById(id) && jumpTo(id, true)) e.preventDefault();
     });
   });
-  if (location.hash.length > 1){
+  if (location.hash.length > 1 && location.hash !== '#top'){
     var hid = decodeURIComponent(location.hash.slice(1));
     window.addEventListener('load', function(){ jumpTo(hid, false); });
   }

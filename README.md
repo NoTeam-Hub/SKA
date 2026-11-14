@@ -25,3 +25,9 @@ You can also run `python scripts/localize_images.py` on your own computer instea
 
 ## Pages
 About, Process, Join Us and Disclaimer pages are in `p/`. Their text comes from the old Blogger pages; the process page was rebuilt from the original process diagram (six phases, architect vs client steps).
+
+## SEO & icons
+- Every page has its own title, description, canonical URL, Open Graph / Twitter tags; the homepage carries `ArchitecturalFirm` structured data, inner pages carry breadcrumbs.
+- `sitemap.xml` and `robots.txt` assume the site lives at https://www.ska-architects.com — edit them if the domain changes.
+- Favicon set (`favicon.svg/.ico`, PNGs, `apple-touch-icon.png`), `site.webmanifest` and the share image `assets/og-image.jpg` are generated; replace them with the official logo artwork when available.
+- After going live, add the site in Google Search Console and submit `https://www.ska-architects.com/sitemap.xml`.

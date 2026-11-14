@@ -98,6 +98,40 @@
     });
   }
 
+  /* crop empty margins around a logo so every logo fills its tile equally */
+  function trimLogo(im, done){
+    var finished = false, fin = function(){ if (!finished){ finished = true; done(); } };
+    setTimeout(fin, 3500);
+    try {
+      var c = new Image(); c.crossOrigin = 'anonymous';
+      c.onload = function(){
+        try {
+          var k = Math.min(1, 360 / Math.max(c.naturalWidth, c.naturalHeight));
+          var w = Math.max(1, Math.round(c.naturalWidth * k)), h = Math.max(1, Math.round(c.naturalHeight * k));
+          var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+          var cx = cv.getContext('2d'); cx.drawImage(c, 0, 0, w, h);
+          var d = cx.getImageData(0, 0, w, h).data, x0 = w, y0 = h, x1 = -1, y1 = -1;
+          for (var y = 0; y < h; y++) for (var x = 0; x < w; x++){
+            var i = (y * w + x) * 4;
+            if (d[i+3] > 24 && (d[i] < 238 || d[i+1] < 238 || d[i+2] < 238)){
+              if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+            }
+          }
+          if (x1 > x0 && y1 > y0 && (x1 - x0) * (y1 - y0) > w * h * 0.02){
+            var p = 2; x0 = Math.max(0, x0 - p); y0 = Math.max(0, y0 - p); x1 = Math.min(w - 1, x1 + p); y1 = Math.min(h - 1, y1 + p);
+            var o = document.createElement('canvas'); o.width = x1 - x0 + 1; o.height = y1 - y0 + 1;
+            var ox = o.getContext('2d'); ox.fillStyle = '#fff'; ox.fillRect(0, 0, o.width, o.height);
+            ox.drawImage(cv, x0, y0, o.width, o.height, 0, 0, o.width, o.height);
+            im.src = o.toDataURL('image/png');
+          }
+        } catch (e) {}
+        fin();
+      };
+      c.onerror = fin;
+      c.src = im.currentSrc || im.src;
+    } catch (e) { fin(); }
+  }
+
   /* client logos: drop any that fail to load, then scroll right to left */
   $$('.logo-marquee').forEach(function(box, idx){
     var t = $('.logo-track', box); if (!t) return;
@@ -117,8 +151,9 @@
     items.forEach(function(it){
       var im = it.querySelector('img');
       function bad(){ if (it.parentNode) it.parentNode.removeChild(it); settle(); }
-      if (im.complete){ im.naturalWidth > 0 ? settle() : bad(); }
-      else { im.addEventListener('load', function(){ im.naturalWidth > 0 ? settle() : bad(); }); im.addEventListener('error', bad); }
+      var ok = function(){ trimLogo(im, settle); };
+      if (im.complete){ im.naturalWidth > 0 ? ok() : bad(); }
+      else { im.addEventListener('load', function(){ im.naturalWidth > 0 ? ok() : bad(); }, {once:true}); im.addEventListener('error', bad); }
     });
     setTimeout(function(){
       $$('.logo-item img', t).forEach(function(im){ if (!im.complete || !im.naturalWidth){ var p = im.parentNode; if (p.parentNode) p.parentNode.removeChild(p); } });

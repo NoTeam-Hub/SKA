@@ -450,3 +450,11 @@ a,button,.chip,.pcard{-webkit-tap-highlight-color:rgba(194,80,42,.18);touch-acti
   .nav-open .menu,.nav-open .menu .sub{visibility:visible}
   .nav-leaving .menu,.nav-leaving .menu *{pointer-events:none}
 }
+
+/* lightbox on category pages */
+.cat-grid a{cursor:zoom-in}
+.cat-grid a img{transition:transform .6s var(--ease)}
+.cat-grid a:hover img{transform:scale(1.03)}
+body.lb-lock{overflow:hidden}
+.lb img{animation:lbIn .35s var(--ease)}
+@keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}

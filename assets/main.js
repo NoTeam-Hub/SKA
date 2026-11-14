@@ -112,6 +112,13 @@
     });
   });
 
+  /* lightbox markup is added on pages that do not carry it (category pages) */
+  if (!$('#lb') && $('.cat-grid')){
+    var lbEl = d.createElement('div');
+    lbEl.className = 'lb'; lbEl.id = 'lb'; lbEl.setAttribute('aria-hidden', 'true'); lbEl.setAttribute('role', 'dialog'); lbEl.setAttribute('aria-modal', 'true');
+    lbEl.innerHTML = "<button aria-label='Close' class='lb-x' type='button'>&#215;</button><button aria-label='Previous' class='lb-p' type='button'>&#8592;</button><button aria-label='Next' class='lb-n' type='button'>&#8594;</button><img alt='' id='lbimg' src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='/><div class='lb-cap' id='lbcap'></div>";
+    d.body.appendChild(lbEl);
+  }
   /* lightbox */
   var lb = $('#lb'), lbimg = $('#lbimg'), lbcap = $('#lbcap'), cur = 0, list = [];
   function show(i){
@@ -133,8 +140,27 @@
     lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
     show(start);
   }
-  function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
+  function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); d.body.classList.remove('lb-lock'); }
   cards.forEach(function(c){ c.addEventListener('click', function(){ openLb(c); }); });
+  /* category pages: every photo opens in the lightbox with swipe / arrows */
+  var catLinks = $$('.cat-grid a');
+  if (catLinks.length){
+    var kind = ((location.pathname.split('/').pop() || '').replace('.html', '') || 'projects');
+    catLinks.forEach(function(a, i){
+      a.setAttribute('aria-label', 'View larger: ' + ((a.querySelector('img') || {}).alt || 'project photo'));
+      a.removeAttribute('target');
+      a.addEventListener('click', function(e){
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+        e.preventDefault();
+        list = catLinks.map(function(l, j){
+          var im = l.querySelector('img');
+          return {full:l.href, title:(im && im.alt) || 'Project', cat:kind, n:(j + 1) + ' / ' + catLinks.length};
+        });
+        lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); d.body.classList.add('lb-lock');
+        show(i);
+      });
+    });
+  }
   var tx = null;
   if (lb){
     lb.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});

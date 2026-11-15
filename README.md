@@ -29,5 +29,5 @@ About, Process, Join Us and Disclaimer pages are in `p/`. Their text comes from 
 ## SEO & icons
 - Every page has its own title, description, canonical URL, Open Graph / Twitter tags; the homepage carries `ArchitecturalFirm` structured data, inner pages carry breadcrumbs.
 - `sitemap.xml` and `robots.txt` assume the site lives at https://www.ska-architects.com — edit them if the domain changes.
-- Favicon set (`favicon.svg/.ico`, PNGs, `apple-touch-icon.png`), `site.webmanifest` and the share image `assets/og-image.jpg` are generated; replace them with the official logo artwork when available.
+- Favicon set (`favicon.svg/.ico`, PNGs, `apple-touch-icon.png`), `site.webmanifest` and the share image `assets/og-image.jpg` are generated; redrawn from the SKA mark of the logo; swap in the original vector logo for a pixel-perfect version.
 - After going live, add the site in Google Search Console and submit `https://www.ska-architects.com/sitemap.xml`.

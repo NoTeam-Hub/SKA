@@ -146,7 +146,7 @@ button{font:inherit}
 .about-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:64px}
 .team{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .tcard .ph{overflow:hidden;aspect-ratio:3/4;background:var(--paper)}
-.tcard img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(1) contrast(1.05);transform:scale(1.03);transition:filter .7s,transform 1.2s var(--ease)}
+.tcard img{width:100%;height:100%;object-fit:cover;object-position:center top;transform:scale(1.03);transition:filter .7s,transform 1.2s var(--ease)}
 .tcard:hover img{filter:none;transform:scale(1.08)}
 .tcard h4{font:400 1.7rem/1.1 var(--serif);margin-top:20px}
 .tcard span{display:block;margin-top:8px;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--clay)}

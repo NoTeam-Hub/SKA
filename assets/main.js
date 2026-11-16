@@ -109,6 +109,7 @@
       cards.forEach(function(c){
         c.classList.toggle('hide', f !== 'all' && c.getAttribute('data-cat') !== f);
       });
+      var en = $('.empty-note'); if (en){ en.hidden = f !== 'commercial'; }
     });
   });
 
@@ -133,7 +134,7 @@
       var u = g.split('|');
       list = u.map(function(x, i){ return {full:x, title:t, cat:k, n:(i + 1) + ' / ' + u.length}; });
     } else {
-      var vis = cards.filter(function(c){ return !c.classList.contains('hide'); });
+      var vis = cards.filter(function(c){ return !c.classList.contains('hide') && !c.classList.contains('soon'); });
       list = vis.map(function(c){ return {full:c.getAttribute('data-full'), title:c.getAttribute('data-title'), cat:c.getAttribute('data-cat')}; });
       start = vis.indexOf(card);
     }
@@ -141,7 +142,7 @@
     show(start);
   }
   function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); d.body.classList.remove('lb-lock'); }
-  cards.forEach(function(c){ c.addEventListener('click', function(){ openLb(c); }); });
+  cards.forEach(function(c){ if (!c.classList.contains('soon')) c.addEventListener('click', function(){ openLb(c); }); });
   /* category pages: every photo opens in the lightbox with swipe / arrows */
   var catLinks = $$('.cat-grid a');
   if (catLinks.length){

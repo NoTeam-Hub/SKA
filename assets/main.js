@@ -241,46 +241,4 @@
     }, 9000);
   });
 
-  /* enquiry form -> emailed to info@ska-architects.com via FormSubmit (no server needed) */
-  var f = $('#enq');
-  if (f) {
-    var TO = 'info@ska-architects.com';
-    var btn = f.querySelector('button[type=submit]');
-    var note = document.createElement('div');
-    note.className = 'f-note';
-    note.setAttribute('role', 'status');
-    note.setAttribute('aria-live', 'polite');
-    f.appendChild(note);
-    var say = function(kind, html){ note.className = 'f-note show ' + kind; note.innerHTML = html; };
-    f.addEventListener('submit', function(e){
-      e.preventDefault();
-      var g = function(n){ return f.elements[n].value.trim(); };
-      if (g('_gotcha')) return; /* spam trap */
-      var label = btn.innerHTML;
-      btn.disabled = true; btn.innerHTML = 'Sending\u2026';
-      say('wait', 'Sending your message\u2026');
-      var data = {
-        name: g('name'), phone: g('phone'), email: g('email'), message: g('msg'),
-        _subject: 'Website enquiry from ' + g('name'),
-        _template: 'table', _captcha: 'false'
-      };
-      if (g('email')) data._replyto = g('email');
-      fetch('https://formsubmit.co/ajax/' + TO, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-        body: JSON.stringify(data)
-      }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok: r.ok, j: j}; }); })
-        .then(function(res){
-          if (res.ok && String(res.j.success) !== 'false') {
-            f.reset();
-            say('ok', '<b>Thank you, ' + (data.name || 'there') + '!</b> Your message has been sent to S.Kumar &amp; Associates. We will get back to you shortly.');
-          } else { throw new Error(res.j.message || 'failed'); }
-        })
-        .catch(function(){
-          var body = data.message + '\n\nName: ' + data.name + '\nPhone: ' + data.phone + '\nEmail: ' + data.email;
-          say('err', 'Sorry, we could not send your message just now. Please <a href="mailto:' + TO + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body) + '">click here to email us</a> or write to ' + TO + '.');
-        })
-        .then(function(){ btn.disabled = false; btn.innerHTML = label; });
-    });
-  }
 })();

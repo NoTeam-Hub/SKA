@@ -288,14 +288,14 @@
         <dt>Write</dt>
         <dd><a href='mailto:info@ska-architects.com'>info@ska-architects.com</a></dd>
       </dl>
-      <form class='f rv' id='enq'>
+      <form class='f rv' id='enq' data-ska-form='contact'>
         <div class='row'>
           <div><label for='fn'>Your name</label><input id='fn' name='name' required='required' type='text'/></div>
           <div><label for='fp'>Phone</label><input id='fp' name='phone' type='tel'/></div>
         </div>
         <div><label for='fm'>Email</label><input id='fm' name='email' type='email'/></div>
         <div><label for='ft'>Tell us about the project</label><textarea id='ft' name='msg' required='required'></textarea></div>
-        <input type='text' name='_gotcha' tabindex='-1' autocomplete='off' aria-hidden='true' style='position:absolute;left:-9999px;opacity:0;height:0;width:0'/>
+        <input type='text' name='website' tabindex='-1' autocomplete='off' aria-hidden='true' class='hp'/>
         <button class='btn' type='submit'>Send enquiry &#8594;</button>
       </form>
     </div>
@@ -333,5 +333,7 @@
 </div>
 
 
+<script src="assets/config.js"></script>
 <script src="assets/main.js"></script>
+<script src="assets/forms.js"></script>
 </body></html>

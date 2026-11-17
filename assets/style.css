@@ -500,3 +500,5 @@ body.lb-lock{overflow:hidden}
 .cat-empty h3{font:500 clamp(22px,3vw,32px)/1.25 var(--head,inherit);margin:0 0 10px}
 .cat-empty p{color:var(--mute);margin:0 0 24px}
 .cat-sub{max-width:1180px;margin:-8px auto 24px;padding:0 28px;color:var(--mute)}
+
+.pg-solo{grid-template-columns:minmax(0,820px)}

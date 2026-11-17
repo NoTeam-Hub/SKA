@@ -502,3 +502,6 @@ body.lb-lock{overflow:hidden}
 .cat-sub{max-width:1180px;margin:-8px auto 24px;padding:0 28px;color:var(--mute)}
 
 .pg-solo{grid-template-columns:minmax(0,820px)}
+
+.stat b{white-space:nowrap}
+.stat.wide b{font-size:.8em;padding-top:.12em}

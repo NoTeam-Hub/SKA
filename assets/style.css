@@ -504,4 +504,5 @@ body.lb-lock{overflow:hidden}
 .pg-solo{grid-template-columns:minmax(0,820px)}
 
 .stat b{white-space:nowrap}
-.stat.wide b{font-size:.8em;padding-top:.12em}
+.stat.wide b{font-size:clamp(2rem,3.5vw,3.6rem)}
+@media(max-width:900px){.stat.wide b{font-size:1.9rem}}

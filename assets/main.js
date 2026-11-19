@@ -242,4 +242,45 @@
     }, 9000);
   });
 
+
+  /* process stepper: one phase at a time, counter, prev/next, swipe, deep links */
+  (function(){
+    var rail = $('.pr-rail'); if (!rail) return;
+    var items = $$('.pr-item', rail), panels = $$('.phase'), wrap = $('.pr-phases');
+    if (!items.length || items.length !== panels.length) return;
+    var bars = $$('.pr-bar'), cur = -1;
+    wrap.classList.add('pr-js'); rail.setAttribute('role','tablist');
+    bars.forEach(function(b){ b.hidden = false; });
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+    function go(i, fromUser){
+      i = Math.max(0, Math.min(items.length - 1, i)); if (i === cur) return; cur = i;
+      items.forEach(function(it, k){ var on = k === i; it.classList.toggle('on', on); it.setAttribute('role','tab'); it.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      panels.forEach(function(p, k){ var on = k === i; p.classList.toggle('on', on); if (on) p.classList.add('in'); p.setAttribute('aria-hidden', on ? 'false' : 'true'); });
+      var name = items[i].querySelector('span:last-child').textContent;
+      bars.forEach(function(b){
+        $('.pr-count b', b).textContent = pad(i + 1); $('.pr-count span', b).textContent = name;
+        $('.pr-prev', b).disabled = i === 0; $('.pr-next', b).disabled = i === items.length - 1;
+      });
+      try { history.replaceState(null, '', '#ph' + (i + 1)); } catch(e){}
+      if (fromUser){ var top = rail.getBoundingClientRect().top + window.pageYOffset - 100; if (window.pageYOffset > top + 40) window.scrollTo({top: Math.max(0, top), behavior: 'smooth'}); }
+    }
+    items.forEach(function(it, k){ it.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); go(k, true); }); });
+    bars.forEach(function(b){
+      $('.pr-prev', b).addEventListener('click', function(){ go(cur - 1, true); });
+      $('.pr-next', b).addEventListener('click', function(){ go(cur + 1, true); });
+    });
+    var sx = null, sy = null;
+    wrap.addEventListener('touchstart', function(e){ var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, {passive:true});
+    wrap.addEventListener('touchend', function(e){
+      if (sx === null) return; var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1), true);
+    }, {passive:true});
+    document.addEventListener('keydown', function(e){
+      if (/input|textarea|select/i.test((e.target.tagName || ''))) return;
+      if (e.key === 'ArrowRight') go(cur + 1, true); else if (e.key === 'ArrowLeft') go(cur - 1, true);
+    });
+    var m = /^#ph([1-6])$/.exec(location.hash); go(m ? +m[1] - 1 : 0, false);
+    window.addEventListener('hashchange', function(){ var h = /^#ph([1-6])$/.exec(location.hash); if (h) go(+h[1] - 1, false); });
+  })();
+
 })();

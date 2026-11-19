@@ -506,3 +506,29 @@ body.lb-lock{overflow:hidden}
 .stat b{white-space:nowrap}
 .stat.wide b{font-size:clamp(2rem,3.5vw,3.6rem)}
 @media(max-width:900px){.stat.wide b{font-size:1.9rem}}
+
+/* process stepper */
+.pr-swipe{display:none;text-align:center;margin:0;padding-top:6px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.pr-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1180px;margin:28px auto 0;padding:0 28px}
+.pr-bar[hidden]{display:none}
+.pr-count{margin:0;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.pr-count b{color:var(--clay);font-weight:500}
+.pr-count span{display:block;margin-top:4px;min-height:1em;color:var(--ink);letter-spacing:.1em}
+.pr-prev,.pr-next{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:14px 22px;border:1px solid var(--ink);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer;transition:background .3s,color .3s,opacity .3s}
+.pr-next{background:var(--ink);color:var(--paper)}
+.pr-prev:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+.pr-next:hover:not(:disabled){background:var(--clay);border-color:var(--clay)}
+.pr-prev:disabled,.pr-next:disabled{opacity:.3;cursor:default}
+.pr-bar-end{margin-top:56px;padding:0}
+.pr-bar:not(.pr-bar-end){padding:0}
+.pr-js .phase{display:none}
+.pr-js .phase.on{display:grid;animation:prIn .5s var(--ease)}
+.pr-js .phase.rv{opacity:1;transform:none}
+@keyframes prIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.pr-item.on b{color:var(--ink)}
+.pr-item.on span:last-child{border-bottom:2px solid var(--clay);padding-bottom:4px}
+.ph-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.ph-tags li{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+@media(max-width:900px){.pr-swipe{display:block}}
+@media(max-width:640px){.pr-bar{flex-wrap:wrap;justify-content:center}.pr-count{order:-1;width:100%}.pr-prev,.pr-next{flex:1;padding:14px 12px;text-align:center}}
+@media(prefers-reduced-motion:reduce){.pr-js .phase.on{animation:none}}

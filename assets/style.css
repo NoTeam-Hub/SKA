@@ -537,3 +537,5 @@ body.lb-lock{overflow:hidden}
 .foot-l .credit a{color:rgba(242,238,230,.95);text-decoration:underline;text-underline-offset:3px}
 .foot-l .credit a:hover{color:var(--clay)}
 @media(max-width:700px){.foot-l .credit a{display:inline-block;padding:8px 0}}
+.cinfo dt{display:flex;align-items:center;gap:10px}
+.cinfo dt .ci{width:18px;height:18px;flex:none}

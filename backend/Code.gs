@@ -9,6 +9,7 @@
  * Setup: see backend/README.md
  */
 var CFG = {
+  OWNER_ACCOUNT: 'fileskaoffice@gmail.com',  // the Google account that must own this script, its Sheet and the Drive folder
   NOTIFY_TO: 'info@ska-architects.com',     // where enquiries / applications are delivered
   SITE_NAME: 'S.Kumar & Associates',
   SHEET_CONTACT: 'Enquiries',
@@ -18,6 +19,7 @@ var CFG = {
   ALLOWED_EXT: ['pdf', 'doc', 'docx', 'rtf', 'odt'],
   MIN_FILL_MS: 4000,                         // forms filled faster than this are treated as bots
   MAX_PER_HOUR: 5,                           // per e-mail address / phone, against abuse
+  REPLY_FROM: 'info@ska-architects.com',  // address the visitor's confirmation mail should appear to come from (optional: must be a verified 'Send mail as' alias of OWNER_ACCOUNT; otherwise mail comes from OWNER_ACCOUNT)
   AUTOREPLY: true                            // send a "we received it" mail to the sender
 };
 
@@ -139,7 +141,17 @@ function autoreply_(type, r) {
     (isJob ? 'Thank you for applying to ' + CFG.SITE_NAME + '. We have received your application and resume and will contact you if there is a suitable opening.'
            : 'Thank you for writing to ' + CFG.SITE_NAME + '. We have received your message and will get back to you shortly.') +
     '\n\nReference: ' + r.ref + '\n\n' + CFG.SITE_NAME + '\nB-33, 2nd Floor, Shivalik, New Delhi - 110017\n' + CFG.NOTIFY_TO;
-  MailApp.sendEmail({ to: r.email, replyTo: CFG.NOTIFY_TO, name: CFG.SITE_NAME, subject: 'We received your ' + (isJob ? 'application' : 'message') + ' [' + r.ref + ']', body: body });
+  var subject = 'We received your ' + (isJob ? 'application' : 'message') + ' [' + r.ref + ']';
+  var from = CFG.REPLY_FROM;
+  var aliases = [];
+  try { aliases = GmailApp.getAliases().map(function (a) { return a.toLowerCase(); }); } catch (err) {}
+  var me = '';
+  try { me = Session.getEffectiveUser().getEmail().toLowerCase(); } catch (err) {}
+  if (from && (aliases.indexOf(from.toLowerCase()) > -1 || me === from.toLowerCase())) {
+    GmailApp.sendEmail(r.email, subject, body, { from: from, replyTo: CFG.NOTIFY_TO, name: CFG.SITE_NAME });   // appears to come from REPLY_FROM
+  } else {
+    MailApp.sendEmail({ to: r.email, replyTo: CFG.NOTIFY_TO, name: CFG.SITE_NAME, subject: subject, body: body });   // fallback: account owner's address
+  }
 }
 
 function getFolder_() {
@@ -149,6 +161,8 @@ function getFolder_() {
 
 /* Run once from the editor to create the folder, the sheets and to grant permissions. */
 function setup() {
+  var me = Session.getEffectiveUser().getEmail();
+  if (me.toLowerCase() !== CFG.OWNER_ACCOUNT.toLowerCase()) throw new Error('Sign in as ' + CFG.OWNER_ACCOUNT + ' to set this up (currently signed in as ' + me + ').');
   getFolder_();
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   [[CFG.SHEET_CONTACT, ['Received', 'Ref', 'Name', 'Phone', 'E-mail', 'Message']],

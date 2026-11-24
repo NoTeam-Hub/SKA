@@ -539,3 +539,27 @@ body.lb-lock{overflow:hidden}
 @media(max-width:700px){.foot-l .credit a{display:inline-block;padding:8px 0}}
 .cinfo dt{display:flex;align-items:center;gap:10px}
 .cinfo dt .ci{width:18px;height:18px;flex:none}
+/* About: leadership profiles */
+.prin{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start;padding-bottom:64px;border-bottom:1px solid var(--line)}
+.prin-ph{aspect-ratio:4/5;overflow:hidden;border-radius:999px 999px 0 0;background:var(--paper2)}
+.prin-ph img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.role{display:block;font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--clay)}
+.prin h3{font:400 clamp(2rem,3.6vw,3.2rem)/1.1 var(--serif);margin:14px 0 8px}
+.edu{color:var(--mute);font-weight:600;margin-bottom:18px}
+.prin-lead{font-size:1.15rem;color:var(--ink2);margin-bottom:18px}
+.hl{list-style:none;padding:0;margin:0 0 8px}
+.hl li,.np li{position:relative;padding-left:22px;margin:0 0 10px;color:var(--ink2)}
+.hl li::before,.np li::before{content:'';position:absolute;left:0;top:.72em;width:10px;height:1px;background:var(--clay)}
+h4.sm{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:26px 0 14px}
+.tags{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.tags li{border:1px solid var(--line);border-radius:99px;padding:6px 14px;font:600 13px/1.2 var(--mono);color:var(--ink2);background:var(--paper)}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:64px}
+.kp-card{border:1px solid var(--line);background:var(--paper);padding:34px 32px}
+.kp-head{display:flex;gap:20px;align-items:center;margin-bottom:22px}
+.kp-ph{width:96px;height:96px;flex:none;border-radius:50%;overflow:hidden;background:var(--paper2)}
+.kp-ph img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.kp-card h3{font:400 1.8rem/1.1 var(--serif);margin:8px 0 6px}
+.kp-card .edu{margin:0}
+.np{list-style:none;padding:0;margin:0}
+@media(max-width:900px){.prin{grid-template-columns:1fr;gap:32px}.prin-ph{max-width:380px}.kp{grid-template-columns:1fr}}
+@media(max-width:560px){.kp-card{padding:26px 20px}.kp-ph{width:76px;height:76px}}
